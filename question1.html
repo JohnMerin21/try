@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        /* Add your styles here */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        .draggable, .resizable, .droppable, .selectable li, .hide-show, .explode, .fade, .color-animation {
+            margin: 10px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .droppable {
+            height: 100px;
+        }
+
+        .selectable {
+            list-style: none;
+            padding: 0;
+        }
+
+        .selectable li {
+            margin: 5px;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .ui-selected {
+            background-color: #FF0000 !important; /* Red color */
+            color: white !important;
+        }
+
+        .accordion {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        .accordion div {
+            padding: 10px;
+        }
+
+        .autocomplete, .datepicker, .slider {
+            margin: 20px;
+        }
+
+        .opacity-notice {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .effects-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        button {
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        /* Add the following styles for the opacity */
+        #opacitySlider {
+            width: 200px;
+            margin: 20px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            // Draggable
+            $('.draggable').draggable();
+
+            // Droppable
+            $('.droppable').droppable({
+                drop: function (event, ui) {
+                    $(this).addClass('ui-state-highlight').html('Dropped!');
+                }
+            });
+
+            // Resizable
+            $('.resizable').resizable();
+
+            // Selectable
+            $('.selectable').selectable();
+
+            // Accordion
+            $('.accordion').accordion();
+
+            // Autocomplete
+            var availableTags = ["Cats", "Dogs", "Fish", "Birds", "Hamsters"];
+            $('.autocomplete').autocomplete({
+                source: availableTags
+            });
+
+            // Datepicker
+            $('.datepicker').datepicker();
+
+            // Slider for Opacity
+            $('#opacitySlider').slider({
+                orientation: 'horizontal',
+                range: 'min',
+                max: 100,
+                value: 100,
+                slide: function (event, ui) {
+                    $('body').css('opacity', ui.value / 100);
+                }
+            });
+
+            // Overview Dropdown
+            $('#gadgetPreference').change(function () {
+                var selectedSection = $(this).val();
+                if (selectedSection) {
+                    var targetSection = $('#' + selectedSection);
+                    if (targetSection.length) {
+                        $('html, body').animate({
+                            scrollTop: targetSection.offset().top
+                        }, 1000);
+                    }
+                }
+            });
+
+            // Show & Hide
+            $('#showButton').click(function () {
+                $('.hide-show').show('fold', 1000);
+            });
+
+            // Explode
+            $('#explodeButton').click(function () {
+                $('.explode').effect('explode', 1000);
+            });
+
+            // Fade-in & Fade-out
+            $('#fadeInButton').click(function () {
+                $('.fade').fadeIn(1000);
+            });
+            $('#fadeOutButton').click(function () {
+                $('.fade').fadeOut(1000);
+            });
+
+            // Color Animation
+            $('#colorAnimateButton').click(function () {
+                $('.color-animation').animate({
+                    backgroundColor: '#FF6347', // Tomato color
+                    color: '#fff'
+                }, 1000);
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>jQuery UI Components Demo</h2>
+
+    <!-- Draggable element -->
+    <div class="draggable">Drag me around</div>
+
+    <!-- Droppable element -->
+    <div class="droppable">Droppable</div>
+
+    <!-- Resizable element -->
+    <div class="resizable">Resizable</div>
+
+    <!-- Overview Dropdown for user selection -->
+    <label for="gadgetPreference">Overview:</label>
+    <select id="gadgetPreference">
+        <option value="" disabled selected>Select Overview</option>
+        <option value="latest">Latest Gadgets</option>
+        <option value="tips">Choosing the Right Gadgets</option>
+        <option value="trends">Future Tech Trends</option>
+    </select>
+
+    <h3>Select Your Preferred Gadget:</h3>
+
+    <!-- Selectable list -->
+    <ul class="selectable">
+        <li>Smartphone</li>
+        <li>Laptop</li>
+        <li>Smartwatch</li>
+        <li>Wireless Earbuds</li>
+    </ul>
+
+    <!-- Accordion -->
+    <div class="accordion">
+        <h3 id="latest">Section 1: Latest Gadgets</h3>
+        <div>
+            <p>Explore the latest and most innovative electronic gadgets on the market. From cutting-edge smartphones to powerful laptops, stay informed about the tech world's advancements.</p>
+            <p>Featured Gadgets:
+                <ul>
+                    <li>XYZ Smartphone Pro</li>
+                    <li>UltraBook X1</li>
+                    <li>Smartwatch Elite Series</li>
+                </ul>
+            </p>
+        </div>
+        <h3 id="tips">Section 2: Choosing the Right Gadgets</h3>
+        <div>
+            <p>Not sure which gadgets are right for you? This section provides valuable tips on selecting electronic devices that match your needs and preferences. Make informed decisions for a satisfying tech experience.</p>
+            <p>Tips:
+                <ul>
+                    <li>Consider Your Usage Needs</li>
+                    <li>Check Reviews and Ratings</li>
+                    <li>Compare Specifications</li>
+                </ul>
+            </p>
+        </div>
+        <h3 id="trends">Section 3: Future Tech Trends</h3>
+        <div>
+            <p>Get a glimpse into the future of technology. Explore upcoming trends and innovations that could shape the way we interact with gadgets. Stay ahead of the curve and embrace the next big things in tech.</p>
+            <p>Upcoming Trends:
+                <ul>
+                    <li>Augmented Reality Devices</li>
+                    <li>AI-Integrated Gadgets</li>
+                    <li>Green Tech Solutions</li>
+                </ul>
+            </p>
+        </div>
+    </div>
+
+    <!-- Autocomplete input -->
+    <input type="text" class="autocomplete" placeholder="Type 'Cats', 'Dogs', etc.">
+
+    <!-- Datepicker input -->
+    <input type="text" class="datepicker" placeholder="Select a date">
+
+    <!-- Slider for Opacity -->
+    <div id="opacitySlider"></div>
+    <div class="opacity-notice">Click on the slider to change the opacity of the website</div>
+</body>
+</html>
+
+
+
+
